@@ -1,0 +1,106 @@
+/* General Body Styling */
+body {
+    background-color: #f3f3f7; /* Soft background to complement soft purple */
+    color: #6a4c9c; /* Soft purple text color */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Header */
+h1, h2 {
+    color: #6a4c9c; /* Soft purple for headers */
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+th {
+    background-color: #d6c6e7; /* Light soft purple for table headers */
+    color: white;
+}
+
+/* Table Row Styling */
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternating rows with a very light color */
+}
+
+tr:hover {
+    background-color: #e1d4f0; /* Light purple highlight on hover */
+}
+
+/* Links and Buttons */
+a {
+    color: #6a4c9c;
+    text-decoration: none;
+}
+
+button {
+    background-color: #6a4c9c; /* Soft purple button background */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #5c3b89; /* Slightly darker purple for button hover */
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Input Fields */
+input[type="number"], input[type="hidden"] {
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="number"]:focus {
+    border-color: #6a4c9c; /* Highlight input fields with soft purple on focus */
+}
+
+/* Page Layout */
+.container {
+    padding: 20px;
+}
+
+.container h2 {
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: left;
+}
+
+/* Additional Spacing */
+table {
+    margin-top: 30px;
+}
+
+th, td {
+    padding: 15px;
+}
+
+/* Adding some spacing between sections */
+section {
+    margin-bottom: 40px;
+}
