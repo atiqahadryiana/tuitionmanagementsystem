@@ -15,25 +15,40 @@ $query = "SELECT * FROM teacher_timetable WHERE teacher_id = '$teacher_id'";
 $timetable_result = mysqli_query($conn, $query);
 
 // Fetch the students enrolled in the teacher's classes
-$students_query = "SELECT u.user_id, u.first_name, u.last_name, c.subject 
-                   FROM users u 
-                   JOIN class_timetable c ON u.user_id = c.student_id 
-                   WHERE c.teacher_id = '$teacher_id'";
+$students_query = "
+    SELECT u.user_id, u.first_name, u.last_name, c.subject
+    FROM users u
+    JOIN class_timetable c ON u.user_id = c.student_id
+    WHERE c.subject IN (SELECT subject FROM teacher_timetable WHERE teacher_id = '$teacher_id')
+";
 $students_result = mysqli_query($conn, $students_query);
 
 // Handle attendance submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $student_id = $_POST['student_id'];
-    $status = $_POST['status'];
-    $date = date('Y-m-d'); // Attendance date
+    // Check if the required POST variables are set
+    if (isset($_POST['student_id'], $_POST['status'])) {
+        $student_id = $_POST['student_id'];
+        $status = $_POST['status'];
+        $date = date('Y-m-d'); // Attendance date
 
-    // Insert attendance record into the database
-    $insert_attendance = "INSERT INTO attendance (user_id, status, date) VALUES ('$student_id', '$status', '$date')";
+        // Validate that the student ID exists in the users table
+        $check_student_query = "SELECT * FROM users WHERE user_id = '$student_id' AND role = 'student'";
+        $student_check_result = mysqli_query($conn, $check_student_query);
 
-    if (mysqli_query($conn, $insert_attendance)) {
-        echo "<script>alert('Attendance recorded successfully!');</script>";
+        if (mysqli_num_rows($student_check_result) > 0) {
+            // Insert attendance record into the database
+            $insert_attendance = "INSERT INTO attendance (user_id, status, date) VALUES ('$student_id', '$status', '$date')";
+
+            if (mysqli_query($conn, $insert_attendance)) {
+                echo "<script>alert('Attendance recorded successfully!');</script>";
+            } else {
+                echo "<script>alert('Error recording attendance.');</script>";
+            }
+        } else {
+            echo "<script>alert('Invalid student ID.');</script>";
+        }
     } else {
-        echo "<script>alert('Error recording attendance.');</script>";
+        echo "<script>alert('Please select a status for all students.');</script>";
     }
 }
 ?>
@@ -76,4 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+
+
 
